@@ -1,5 +1,5 @@
 import zmq
-from client_connection import connection
+from player_connection import connection
 
 def principal_menu(socket):
     while True:

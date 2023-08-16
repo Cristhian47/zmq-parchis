@@ -1,11 +1,11 @@
 import zmq
 import time
 from lobby import Lobby
-from player import Player
+from player_data import Player
 
 def main():
     context = zmq.Context()
-    socket = context.socket(zmq.REP)
+    socket = context.socket(zmq.REQ)
     socket.bind("tcp://*:5555")
 
     lobby = Lobby()

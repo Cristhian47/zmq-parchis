@@ -1,0 +1,92 @@
+{
+    "id": 6123,
+    "seguros": [5,12,17,22,29,34,39,46,51,56,63,68],
+    "amarillo":{
+        "fichas": [
+            {
+                "id":1,
+                "posicion": 0
+            },
+            {
+                "id":2,
+                "posicion": 0
+            },
+            {
+                "id":3,
+                "posicion": 0
+            },
+            {
+                "id":4,
+                "posicion": 0
+            }
+        ],
+        "entrada_cielo": 68,
+        "inicio": 5
+    },
+    "azul":{
+        "fichas": [
+            {
+                "id":1,
+                "posicion": 0
+            },
+            {
+                "id":2,
+                "posicion": 0
+            },
+            {
+                "id":3,
+                "posicion": 0
+            },
+            {
+                "id":4,
+                "posicion": 0
+            }
+        ],
+        "entrada_cielo": 17,
+        "inicio": 22
+    },
+    "rojo":{
+        "fichas": [
+            {
+                "id":1,
+                "posicion": 0
+            },
+            {
+                "id":2,
+                "posicion": 0
+            },
+            {
+                "id":3,
+                "posicion": 0
+            },
+            {
+                "id":4,
+                "posicion": 0
+            }
+        ],
+        "entrada_cielo": 34,
+        "inicio": 39
+    },
+    "verde":{
+        "fichas": [
+            {
+                "id":1,
+                "posicion": 0
+            },
+            {
+                "id":2,
+                "posicion": 0
+            },
+            {
+                "id":3,
+                "posicion": 0
+            },
+            {
+                "id":4,
+                "posicion": 0
+            }
+        ],
+        "entrada_cielo": 51,
+        "inicio": 56
+    }
+}

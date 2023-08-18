@@ -5,7 +5,7 @@ from player_data import Player
 
 def main():
     context = zmq.Context()
-    socket = context.socket(zmq.REQ)
+    socket = context.socket(zmq.REP)
     socket.bind("tcp://*:5555")
 
     lobby = Lobby()

@@ -19,12 +19,20 @@ def main():
         parts = message.split(" ")
         if parts[0] == "create_room":
             print("room created")
-            response = main_menu.create_room(parts[1])
+            if not (parts[1] in main_menu.rooms):
+                response = main_menu.create_room(parts[1])
+            else:
+                response = "this room already exists, try again"
 
         elif parts[0] == "join_room":
             print("join to room")
             player = Player("")
-            response = main_menu.join_room(parts[1], player)
+            #for room in main_menu.rooms:
+            if (parts[1] in main_menu.rooms):
+                response = main_menu.join_room(parts[1], player)
+            else:
+                response = "room not found, try again"
+            #if not (parts[1] in main_menu.rooms.keys):
 
         elif parts[0] == "get_players":
             if parts[1] in main_menu.rooms:

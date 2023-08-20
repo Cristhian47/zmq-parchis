@@ -1,6 +1,6 @@
 from room import Room
 
-class Lobby:
+class MainMenu:
     def __init__(self):
         self.rooms = {}
 

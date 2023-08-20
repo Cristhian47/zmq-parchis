@@ -1,6 +1,6 @@
 import zmq
 import time
-from lobby import Lobby
+from main_menu import MainMenu
 from player_data import Player
 
 def main():
@@ -8,7 +8,7 @@ def main():
     socket = context.socket(zmq.REP)
     socket.bind("tcp://*:5555")
 
-    lobby = Lobby()
+    main_menu = MainMenu()
 
     while True:
         message = socket.recv_string()
@@ -17,16 +17,19 @@ def main():
         response = ""
 
         parts = message.split(" ")
-        if len(parts) >= 3 and parts[0] == "create_room":
-            response = lobby.create_room(parts[1])
+        if parts[0] == "create_room":
+            print("room created")
+            response = main_menu.create_room(parts[1])
 
-        elif len(parts) >= 4 and parts[0] == "join_room":
-            player = Player(parts[3])
-            response = lobby.join_room(parts[1], player)
+        elif parts[0] == "join_room":
+            print("join to room")
+            player = Player("")
+            response = main_menu.join_room(parts[1], player)
 
-        elif len(parts) >= 2 and parts[0] == "get_players":
-            if parts[1] in lobby.rooms:
-                room = lobby.rooms[parts[1]]
+        elif parts[0] == "get_players":
+            if parts[1] in main_menu.rooms:
+                print("get players")
+                room = main_menu.rooms[parts[1]]
                 response = ", ".join(room.get_players())
 
         socket.send_string(response)

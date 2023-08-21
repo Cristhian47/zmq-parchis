@@ -26,7 +26,20 @@ def lanzar_dados(self):
         else:
             print("Opción inválida")
 
+def get_ip_address(socket):
+    try:
+        host_name = socket.gethostname()
+        ip_address = socket.gethostbyname(host_name)
+
+        return ip_address
+    except Exception as e:
+        print("Error al obtener la dirección IP:", e)
+        return None
+
 def principal_menu(socket):
+    
+    ip = get_ip_address(socket)
+
     while True:
             print("\nOptions :")
             print("1. Create Room")
@@ -36,21 +49,21 @@ def principal_menu(socket):
             choice = input("Enter your choice: ")
 
             if choice == "1":
-                identifier = input("Enter room identifier: ")
-                socket.send_string(f"create_room {identifier}")
+                socket.send_string(f"create_room id {ip}")
                 response = socket.recv_string()
                 print(response)
+                lobby_menu(socket)
 
             elif choice == "2":
                 identifier = input("Enter room identifier: ")
-                name = input("Enter your name: ")
-                socket.send_string(f"join_room {identifier} {name}")
+                socket.send_string(f"join_room {identifier} {ip}")
                 response = socket.recv_string()
                 print(response)
+                lobby_menu(socket)
 
             elif choice == "3":
                 identifier = input("Enter room identifier: ")
-                socket.send_string(f"get_players {identifier}")
+                socket.send_string(f"get_players {identifier} {ip}")
                 response = socket.recv_string()
                 print(f"Players in room: {response}")
 
@@ -59,3 +72,30 @@ def principal_menu(socket):
 
             else:
                 print("Invalid choice")
+
+def lobby_menu(socket):
+     
+     ip = get_ip_address(socket)
+
+     while True:
+            print("\nOptions :")
+            print("1. Start Game")
+            print("2. Get Players")
+            print("3. Exit")
+            
+            choice = input("Enter your choice: ")
+
+            if choice == "1":
+                socket.send_string(f"start_game id {ip}")
+                response = socket.recv_string()
+                print(response)
+            
+            elif choice == "2":
+                identifier = input("Enter room identifier: ")
+                socket.send_string(f"get_players {identifier} {ip}")
+                response = socket.recv_string()
+                print(f"Players in room: {response}")
+
+            elif choice == "3":
+                return
+     

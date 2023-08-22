@@ -1,5 +1,6 @@
 import zmq
 from player_connection import connection
+import random
 
 def lanzar_dados(self):
         input("Presiona Enter para lanzar los dados...")
@@ -27,14 +28,11 @@ def lanzar_dados(self):
             print("Opción inválida")
 
 def get_ip_address(socket):
-    try:
-        host_name = socket.gethostname()
-        ip_address = socket.gethostbyname(host_name)
-
-        return ip_address
-    except Exception as e:
-        print("Error al obtener la dirección IP:", e)
-        return None
+    endpoint = socket.getsockopt_string(zmq.LAST_ENDPOINT)
+    print("endpoint ", endpoint)
+    ip_address = endpoint.split(":")[1].strip("/")
+    print("ip_address ", ip_address)
+    return ip_address
 
 def principal_menu(socket):
     
@@ -49,9 +47,18 @@ def principal_menu(socket):
             choice = input("Enter your choice: ")
 
             if choice == "1":
+
                 socket.send_string(f"create_room id {ip}")
                 response = socket.recv_string()
                 print(response)
+
+                parts = response.split(" ") # Room "id" created
+
+                #Join to room after created
+                socket.send_string(f"join_room {parts[1]} {ip}")
+                response = socket.recv_string()
+                print(response)
+
                 lobby_menu(socket)
 
             elif choice == "2":

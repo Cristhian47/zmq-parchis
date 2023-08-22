@@ -98,6 +98,9 @@ def main():
                 room = main_menu.rooms[parts[1]]
                 response = ", ".join(room.get_players())
 
+        print(response)
+        if(response is None):
+            response = "Request not found, try again"
         socket.send_string(response)
 
 if __name__ == "__main__":

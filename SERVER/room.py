@@ -17,7 +17,7 @@ class Room:
             return f"Room {self.identifier} is full"
 
     def get_players(self):
-        return [player.color for player in self.players]
+        return [player.color + "/" + player.ip for player in self.players]
         
     def assign_color(self):
         for color in Colors.existing_colors:

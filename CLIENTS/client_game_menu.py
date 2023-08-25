@@ -4,26 +4,35 @@ import threading
 import time
 
 game_ended = False
+game_started = False
 thread_end = False
+game_finished = False
 
 def recibir_mensajes(socket):
     global game_ended
-    
+    global game_started
     while True:
         events = socket.poll(100, zmq.POLLIN)
         if events == zmq.POLLIN:
             mensaje = socket.recv_string()
-            print(mensaje)
+            print(f"{mensaje} enter any option to continue...")
             if mensaje == "game_ended":
                 game_ended = True
                 break
+            if mensaje == "game_started":
+                game_started = True
         elif thread_end == True:
             break
+        elif game_finished == True:
+            break
+
 
 
 def menu_board(player, socket, socket_brodcast):
     global game_ended
     global thread_end
+    global game_started
+    global game_finished
     
     thread = threading.Thread(target=recibir_mensajes, args=(socket_brodcast,))
     thread.start()
@@ -36,9 +45,21 @@ def menu_board(player, socket, socket_brodcast):
 
         if game_ended == True:
             break
+        elif game_started == True:
+            os.system("cls")
+            #aqui  va el juego
+            game_finished = True
+            break
         else:
             if opcion == "1":
                 message = f"start_game {player.game_id} | {player.color}" 
+                socket.send_string(message)
+                information = socket.recv_string()
+                if information == "game_started":
+                    #aaqui va el juego
+                    pass
+                print(information)
+                time.sleep(2)
             elif opcion == "2":
                 message = f"exit_game {player.game_id} | {player.color}"
                 socket.send_string(message)
@@ -53,6 +74,8 @@ def menu_board(player, socket, socket_brodcast):
     thread.join()
     game_ended = False
     thread_end = False
+    game_started = False
+    game_finished = False
 
     return True
 

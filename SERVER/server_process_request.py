@@ -70,9 +70,13 @@ def start_game(game_id, color):
 
     if Boards[int(game_id)][0]["host_partida"] == color:
         if len(jugadores) < 3:
+            brodcast = Boards[int(game_id)][1]
+            brodcast.send_string("game_started")
             return "game_started"
         else:
             return "game_not_started"
+    else:
+        return "you_are_not_the_host"
     
 
 def process_request(message):

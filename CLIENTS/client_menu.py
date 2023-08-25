@@ -4,6 +4,7 @@ import time
 from client_information import *
 from client_game_menu import menu_board
 from client_connection_brodcast import connection_brodcast
+import random
 
 def lanzar_dados(self):
         input("Presiona Enter para lanzar los dados...")

@@ -3,6 +3,7 @@
     "id": 6123,
     "colores_disponibles": ["amarillo","azul","rojo","verde"],
     "seguros": [5,12,17,22,29,34,39,46,51,56,63,68],
+    "turno": "amarillo",
     "amarillo":{
         "fichas": [
             {

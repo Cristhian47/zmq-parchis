@@ -1,11 +1,118 @@
+import random
 import zmq
 import os
 import time
 from client_information import *
 from client_game_menu import menu_board
 from client_connection_brodcast import connection_brodcast
+tablero = {
+    "host_partida": "",
+    "id": 6123,
+    "colores_disponibles": ["amarillo","azul","rojo","verde"],
+    "seguros": [5,12,17,22,29,34,39,46,51,56,63,68],
+    "turno": "amarillo",
+    "amarillo":{
+        "fichas": [
+            {
+                "id":1,
+                "posicion": 0
+            },
+            {
+                "id":2,
+                "posicion": 0
+            },
+            {
+                "id":3,
+                "posicion": 0
+            },
+            {
+                "id":4,
+                "posicion": 0
+            }
+        ],
+        "entrada_cielo": 68,
+        "inicio": 5
+    },
+    "azul":{
+        "fichas": [
+            {
+                "id":1,
+                "posicion": 0
+            },
+            {
+                "id":2,
+                "posicion": 0
+            },
+            {
+                "id":3,
+                "posicion": 0
+            },
+            {
+                "id":4,
+                "posicion": 0
+            }
+        ],
+        "entrada_cielo": 17,
+        "inicio": 22
+    },
+    "rojo":{
+        "fichas": [
+            {
+                "id":1,
+                "posicion": 0
+            },
+            {
+                "id":2,
+                "posicion": 0
+            },
+            {
+                "id":3,
+                "posicion": 0
+            },
+            {
+                "id":4,
+                "posicion": 0
+            }
+        ],
+        "entrada_cielo": 34,
+        "inicio": 39
+    },
+    "verde":{
+        "fichas": [
+            {
+                "id":1,
+                "posicion": 0
+            },
+            {
+                "id":2,
+                "posicion": 0
+            },
+            {
+                "id":3,
+                "posicion": 0
+            },
+            {
+                "id":4,
+                "posicion": 0
+            }
+        ],
+        "entrada_cielo": 51,
+        "inicio": 56
+    }
+}
+def imprimir_tablero(tablero):
+    print("ID del juego:", tablero["id"])
+    print("Turno:", tablero["turno"])
+    
+    for color, data in tablero.items():
+        if color in ["host_partida", "id", "colores_disponibles", "seguros", "turno"]:
+            continue
+        
+        print("\nFichas de color", color.capitalize())
+        for ficha in data["fichas"]:
+            print("Ficha", ficha["id"], "- Posición:", ficha["posicion"])
 
-def lanzar_dados(self):
+def lanzar_dados(tablero, color):
         input("Presiona Enter para lanzar los dados...")
         dado1 = random.randint(1, 6)
         dado2 = random.randint(1, 6)
@@ -30,6 +137,17 @@ def lanzar_dados(self):
         else:
             print("Opción inválida")
 
+def mover_ficha(tablero, color, id_ficha, num):
+    # Buscar el color y la ficha en el tablero
+    if color in tablero and "fichas" in tablero[color]:
+        fichas_color = tablero[color]["fichas"]
+        for ficha in fichas_color:
+            if ficha["id"] == id_ficha:
+                ficha["posicion"] += num
+                break
+
+def is_turn(tablero, color):
+    return tablero['turno'] == color
 
 def menu(socket):
     while True:
@@ -73,6 +191,13 @@ def menu(socket):
                         index = menu_board(player, socket, socket_brodcast)
                         if index:
                             break
+
+                        if is_turn(tablero, color):
+                            lanzar_dados(tablero, color)
+                        else :
+                            imprimir_tablero(tablero)
+                            
+                            
                     elif information[0] == "game_not_found":
                         time.sleep(2)
                         os.system("cls")
